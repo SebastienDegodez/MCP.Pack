@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="NuGet.Protocol" Version="6.14.0" />
+    <!-- System.Formats.Asn1 is required by NuGet.Protocol but 6.0.0 has know high severity vulnerability -->
+    <PackageReference Include="System.Formats.Asn1" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
