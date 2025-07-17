@@ -1,0 +1,78 @@
+name: Deploiement le site MARP vers GitHub Pages
+concurrency: marp-to-pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+jobs:
+  build:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Ensure build dir exists
+        run: mkdir -p build
+
+      - name: Copy images directory (if exists)
+        run: if [[ -d presentation/images ]]; then cp -R presentation/images build/images; fi
+
+      - name: Build HTML from Build (slide.md)
+        uses: docker://marpteam/marp-cli:v4.2.0
+        with:
+          args: presentation/slide.md -o build/index.html
+        env:
+          MARP_USER: root:root
+        
+
+      # - name: Build PDF from Marp  (slide.pdf)
+      #   uses: docker://marpteam/marp-cli:v4.2.1
+      #   with:
+      #     args: presentation/slide.md -o build/slide.pdf --pdf
+      #   env:
+      #     MARP_USER: root:root
+
+      # - name: Build PPTX from Marp (slide.pptx)
+      #   uses: docker://marpteam/marp-cli:v4.2.0
+      #   with:
+      #     args: presentation/slide.md -o build/slide.pptx --pptx
+      #   env:
+      #     MARP_USER: root:root
+
+      # - name: Upload slide artifacts
+      #   if: ${{ github.event_name == 'push' }}
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: presentation
+      #     path: |
+      #       ./build/*.pdf
+      #       ./build/*.pptx
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: 'build'
+
+      - name: Deploy production to GitHub Pages
+        if: ${{ github.event_name == 'push' }}
+        id: deployment
+        uses: actions/deploy-pages@v4
+          

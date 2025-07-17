@@ -1,0 +1,6 @@
+allowLocalFiles: true
+themeSet: ./presentation/themes
+lang: fr
+options:
+  minifyCSS: true
+html: true

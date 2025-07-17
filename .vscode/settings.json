@@ -1,0 +1,5 @@
+{
+    "markdown.marp.themes": [
+        "https://raw.githubusercontent.com/SebastienDegodez/slide-marp/refs/heads/main/presentation/themes/custom-default.css"
+    ]
+}
