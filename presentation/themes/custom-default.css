@@ -1,0 +1,44 @@
+/* custom-default.css */
+/* @theme custom-default */
+
+@import 'gaia';
+
+/* Add custom styles here */
+code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.6em;
+}
+
+div#presentation {
+  display: flex;
+  justify-content: center;
+}
+
+div#presentation > img {
+  vertical-align: middle;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  margin-right: 1.1em;
+}
+
+div#presentation h1 {
+  margin-top: 0px;
+}
+
+div#presentation h1, h5 {
+  text-align: left;
+}
+
+div#end {
+  display: flex;
+  justify-content: center;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css'
